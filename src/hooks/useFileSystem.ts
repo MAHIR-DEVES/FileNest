@@ -9,16 +9,17 @@ import {
 } from '@/utils/fileSystem';
 
 export const useFileSystem = () => {
-  const [tree, setTree] = useState<FileSystemNode>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('fileExplorerTree');
-      return saved ? JSON.parse(saved) : initialTree;
-    }
-    return initialTree;
-  });
-
+  const [tree, setTree] = useState<FileSystemNode>(initialTree);
   const [selectedFolderId, setSelectedFolderId] = useState<string>('root');
   const [openFileId, setOpenFileId] = useState<string | null>(null);
+
+  // load saved tree after hydration
+  useEffect(() => {
+    const saved = localStorage.getItem('fileExplorerTree');
+    if (saved) {
+      setTree(JSON.parse(saved));
+    }
+  }, []);
 
   // save to localStorage
   useEffect(() => {

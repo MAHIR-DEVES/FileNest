@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { FileSystemNode } from '@/types/filesystem';
-import { Folder, FileText, Plus, Pencil, Trash2, X, Check } from 'lucide-react';
+import { Folder, FileText, Plus, Pencil, Trash2, X, Save } from 'lucide-react';
 
 interface MainPanelProps {
   contents: FileSystemNode[];
@@ -89,20 +89,20 @@ const MainPanel = ({
             onChange={e => setNewName(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleCreate()}
             placeholder={creating === 'folder' ? 'Folder name' : 'filename.txt'}
-            className="flex-1 min-w-0 px-2 py-1 text-sm border border-gray-300 rounded outline-none focus:border-blue-500"
+            className="flex-1 min-w-0 px-2 py-1 text-sm border border-gray-300 rounded outline-none focus:border-blue-500 text-black"
           />
           <div className="flex items-center gap-2">
             <button
               onClick={handleCreate}
-              className="text-green-600 hover:text-green-700"
+              className="flex items-center gap-1 px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors"
             >
-              <Check size={18} />
+              <Save size={12} /> Save
             </button>
             <button
               onClick={() => setCreating(null)}
-              className="text-red-500 hover:text-red-600"
+              className="flex items-center gap-1 px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded hover:bg-gray-300 transition-colors"
             >
-              <X size={18} />
+              <X size={12} /> Cancel
             </button>
           </div>
         </div>
@@ -150,7 +150,7 @@ const MainPanel = ({
                 </div>
 
                 {renamingId === node.id ? (
-                  <div className="flex flex-wrap items-center justify-center gap-1 mt-2">
+                  <div className="flex items-center justify-center gap-2 mt-2">
                     <input
                       autoFocus
                       value={renameValue}
@@ -160,25 +160,25 @@ const MainPanel = ({
                         if (e.key === 'Enter') handleRenameSave();
                       }}
                       onClick={e => e.stopPropagation()}
-                      className="w-full max-w-[150px] px-1 text-xs border border-blue-400 rounded outline-none"
+                      className="px-2 py-1 text-sm border border-gray-300 rounded focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-200 text-black w-32"
                     />
                     <button
                       onClick={e => {
                         e.stopPropagation();
                         handleRenameSave();
                       }}
-                      className="text-green-600"
+                      className="flex items-center gap-1 px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors"
                     >
-                      <Check size={12} />
+                      <Save size={12} /> Save
                     </button>
                     <button
                       onClick={e => {
                         e.stopPropagation();
                         setRenamingId(null);
                       }}
-                      className="text-red-500"
+                      className="flex items-center gap-1 px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded hover:bg-gray-300 transition-colors"
                     >
-                      <X size={12} />
+                      <X size={12} /> Cancel
                     </button>
                   </div>
                 ) : null}
